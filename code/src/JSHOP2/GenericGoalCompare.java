@@ -9,6 +9,7 @@ public class GenericGoalCompare {
 		{
 			case "rover" : return rover.RoversGoalCompare.compare(s, Goal);
 			case "trucks" : return trucks.TrucksGoalCompare.compare(s, Goal);
+			case "blocks" : return blocks.BlocksGoalCompare.compare(s,Goal);
 			default : return 0;
 		}
 	}

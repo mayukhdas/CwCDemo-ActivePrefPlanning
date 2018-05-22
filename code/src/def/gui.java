@@ -13,7 +13,7 @@ public class gui{
 		String problemFile = sc.nextLine();
 		if(problemFile.toLowerCase().equals("sense"))
 			problemFile = ReadFromSensor.getProblem();
-		String s = "./examples/Blocks/"+problemFile;
+		String s = "./examples/Rovers/"+problemFile;
 		System.out.println(s);
 		try {
 			(new InternalDomain(new File(s), 1)).parser.command();
