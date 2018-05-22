@@ -1,0 +1,28 @@
+conversion start
+
+KB
+{
+animal("donkey")
+to
+C1 animal("donkey")
+DonkeyKong("donkey")
+to
+C2 DonkeyKong("donkey")
+}
+
+Negated Query
+{
+Exist X [animal(X) & DonkeyKong(X)]
+to
+C3  !animal($v1) | !DonkeyKong($v1)
+}
+
+conversion end
+
+proof & unification start
+
+
+proof & unification end
+
+PROOF/DISPROOF
+DISPROOF

@@ -1,0 +1,8 @@
+(defproblem smallproblem blocks 
+  ((block coke) (block pepsi) (block sri) (block hp) (on-table coke) (on pepsi coke) (clear pepsi) (on-table sri) (on hp sri) (clear hp)) 
+  (
+   (achieve-goals 
+    ((on-table coke) (on hp coke) (clear hp) (on-table sri) (on pepsi sri) (clear pepsi)   )
+  )
+ )
+)

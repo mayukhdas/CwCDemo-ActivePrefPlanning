@@ -1,0 +1,7 @@
+Variables: X
+Constants: 
+Predicates: Wolf(v1),animal(v1),DonkeyKong(v1)
+FOL start
+animal("donkey")
+DonkeyKong("donkey")
+FOL end
