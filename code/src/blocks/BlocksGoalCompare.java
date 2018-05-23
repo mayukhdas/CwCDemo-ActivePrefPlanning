@@ -42,10 +42,10 @@ public class BlocksGoalCompare {
 		connected = new MultiValueMap<String,String>();
 		for(String stateAtom : s.getState())
 		{
-			if(stateAtom.contains("on"))
+			if(stateAtom.contains("on "))
 			{
 				String[] atomArr = stateAtom.replace('(', ' ').replace(')', ' ').trim().split(" ");
-				connected.put(atomArr[2], atomArr[3]);
+				connected.put(atomArr[1], atomArr[2]);
 			}
 		}
 	}
@@ -71,74 +71,26 @@ public class BlocksGoalCompare {
 		{
 			dist =0;
 			String[] goalAtomArr = atom.split(" ");
-			//System.out.println("^^^^"+atom);
+			//System.out.println("^^^^"+atom)
+			boolean sat = false;
 			
 			for(String stateAtom : s.getState())
 			{
 				if(stateAtom.contains("goal"))
 					continue;
+				String strippedStateAtom = stateAtom.replace(')', ' ').replaceAll("\\)","").replaceAll("\\(","");
+				String[] stateAtomArr = strippedStateAtom.split(" ");
 				
-				String[] stateAtomArr = stateAtom.replace(')', ' ').replaceAll("\\)","").replaceAll("\\(","").split(" ");
-				
-				if(!goalAtomArr[0].contains("image")) //if not image data
+				if(atom.equals(strippedStateAtom))
 				{
-					if(stateAtomArr[0].contains(goalAtomArr[0]))//if goal atom exists in state atom
-					{
-						if(stateAtomArr[1].contains(goalAtomArr[1]))
-						{
-							dist = dist+0;
-							break;
-						}
-					}
-					else if(stateAtomArr[0].equals("at")) // if AT atom
-					{
-						boolean YesConnected=false;
-						//System.out.println(stateAtomArr[0]);
-						//System.out.println(goalAtomArr[1]);
-						if(stateAtomArr[2].contains(goalAtomArr[1]))
-							dist +=2;
-						else
-						{
-							for(String wps:connected.getCollection(stateAtomArr[2]))
-							{
-								if(wps.contains(goalAtomArr[1]))
-								{
-									dist +=3;
-								}
-							}
-						}
-					}
-				}//end of if -- goal type Image, Not image
-				else
-				{
-					if(stateAtomArr[0].contains(goalAtomArr[0]))//if goal atom exists in state atom
-					{
-						if(stateAtomArr[2].contains(goalAtomArr[2]))
-						{
-							dist = dist+0;
-							break;
-						}
-					}
-					else if(stateAtomArr[0].equals("at")) // if AT atom
-					{
-						boolean YesConnected=false;
-						if(stateAtomArr[2].contains(goalAtomArr[2]))
-							dist +=2;
-						else
-						{
-							for(String wps:connected.getCollection(stateAtomArr[2]))
-							{
-								if(wps.contains(goalAtomArr[2]))
-								{
-									dist +=3;
-									break;
-								}
-							}
-							dist +=4;
-						}
-					}
+					sat = true;
+					break;
 				}
-				
+								
+			}
+			if(!sat)
+			{
+				dist+=1;
 			}
 			GAtomDist.put(atom, dist);
 		}
