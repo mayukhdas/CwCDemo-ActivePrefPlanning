@@ -250,6 +250,7 @@ public class JSHOP2
     //-- The local variables we need every time this function is called.
     InternalVars v = new InternalVars();
     
+    boolean userPref = false;
     //-- Find all the tasks that we have the option to achieve right now. This
     //-- equals to the first task in the current task list if it is ordered, or
     //-- the first task in all the subtasks of the current task list if it is
@@ -394,9 +395,9 @@ public class JSHOP2
     	  if(pref)
     	  {
 	    	  double returnVal = RollOutInitiator(chosenTask, state);
-	    	  System.out.println(MethodDist);
+	    	  System.out.println("Method Distribution"+ MethodDist);
 	    	  double entropy = entropycalc(MethodDist);
-	    	  System.out.println(entropy);
+	    	  System.out.println("Entropy" + entropy);
 	    	 
 	    	  //-----best option based on heuristics-------- change by Mayukh Das
 	    	  int option =-1;
@@ -800,12 +801,14 @@ public class JSHOP2
 			  methodProbs.put(i, (MethodDist.get(i)-min)/(max - min));
 		  }
 	  }*/
+	  methodProbs = (Hashtable<Integer, Double>)MethodDist.clone();
 	  //System.out.println(methodProbs);
 	  double sum = 0.0;
 	  if(methodProbs.keySet().size()>0)
 	  {
 		  for(int i:methodProbs.keySet())
 		  {
+			  System.out.print(Math.exp(methodProbs.get(i)));
 			  sum += Math.exp(methodProbs.get(i));
 		  }
 		  for(int i:methodProbs.keySet())
@@ -823,7 +826,7 @@ public class JSHOP2
 		  }
 		  
 	  }
-	  //System.out.println(ent);
+	  System.out.println("Sum: "+sum);
 	  return ent;
   }
   
