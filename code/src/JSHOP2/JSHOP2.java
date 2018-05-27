@@ -249,7 +249,7 @@ public class JSHOP2
   {
     //-- The local variables we need every time this function is called.
     InternalVars v = new InternalVars();
-    
+    board b = new board(); //**bc
     boolean userPref = false;
     //-- Find all the tasks that we have the option to achieve right now. This
     //-- equals to the first task in the current task list if it is ordered, or
@@ -425,6 +425,9 @@ public class JSHOP2
 		        			  maxval = MethodDist.get(k);
 		        		  }
 		        	  }
+		        	  
+		        	  
+		        	  //System.out.println(state.getState());
 		    		  System.out.println(MethodDist + " ===== " + entropy+"======Ask here!====="+MethodDist.size());
 		    		  System.out.println("Task: "+ v.t.toString());
 		    		  System.out.println("Options----");
