@@ -2,6 +2,7 @@ package JSHOP2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -403,7 +404,7 @@ public class JSHOP2
     	  if(pref)
     	  {
 	    	  double returnVal = RollOutInitiator(chosenTask, state);
-	    	  System.out.println("Method Distribution"+ MethodDist);
+	    	  System.out.println("Method Distribution"+ MethodDist.size());
 	    	  double entropy = entropycalc(MethodDist);
 	    	  System.out.println("Entropy" + entropy);
 	    	 
@@ -441,6 +442,7 @@ public class JSHOP2
 		    		  System.out.println("Options----");
 		    		  for(int x=0;x<v.m.length;x++)
 		    		  {
+		    			  if(MethodDist.keySet().contains(x))
 		    			  System.out.println(x+" : "+ Arrays.deepToString(v.m[x].getSubs()));
 		    			  
 		    		  }
@@ -468,18 +470,36 @@ public class JSHOP2
 		        		if(exists)
 		        			continue;
 		        	}
-		        	others.add(x);
+		        	if(MethodDist.size()>1)
+		        	{
+		        		if(MethodDist.keySet().contains(x))
+		        			others.add(x);
+		        	}
+		        	else
+		        		others.add(x);
 		        }
     	}
+    	Collections.shuffle(others);
+    	int count = 0;
+      	boolean sw = false;
     	 if(userchoice.size()>0)
+    	 {
     		 iter = userchoice;
+    		 iter.addAll(others);
+    	 }
     	 else
+    	 {
+    		 sw = true;
     		 iter = others;
+    	 }
+    	 
         //-- For each of these methods,
         //for (v.j = 0; v.j < v.m.length; v.j++)
+    	System.out.println(iter);
         for(int c:iter)
         {
         	v.j = c;
+        	count +=1;
           //-- Find the binding that unifies the head of the method with the
           //-- task.
         	v.binding = v.m[v.j].unify(v.t.getHead());
@@ -546,6 +566,7 @@ public class JSHOP2
             }
           }
         }
+        
       }
 
       //-- Create a BACKTRACKING step for the list of plan steps
@@ -566,7 +587,7 @@ public class JSHOP2
    */
   private static double RollOutInitiator(TaskList chosenTask, State s)
   {
-	  rollouttasks = chosenTask;
+	  rollouttasks = chosenTask.clone();
 	  rolloutPlans = new LinkedList<Plan>();
 	  copyState = s.deepClone();
 	  rolloutCurrentPlan = new Plan();
@@ -908,9 +929,9 @@ public class JSHOP2
 		  ArrayList<Constant> args = new ArrayList<Constant>();
 		  for(int i=0; i<terms.size();i++)
 		  {
-			  args.add(i, new Constant(terms.get(i));
+			  args.add(i, new Constant(terms.get(i)));
 		  }
-		  FOLAtom fa = new FOLAtom(predicate,args);
+		  //FOLAtom fa = new FOLAtom(predicate,args);
 	  }
 	  
 	  FolBeliefSet st = new FolBeliefSet();

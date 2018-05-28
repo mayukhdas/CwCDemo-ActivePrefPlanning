@@ -258,6 +258,7 @@ public class DrawGUI {
         topMiddle.setBounds((FRAME_SIZE_WIDTH /3) + 50, 10, 370, 35);
         String topMiddleTitle = "Plan From the Planner";
         topMiddle.add(new JLabel(topMiddleTitle));
+        topMiddle.add(list); //MD
         frame.add(topMiddle);
         
         //display(frame);

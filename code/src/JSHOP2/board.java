@@ -315,14 +315,15 @@ public class board {
 		Vector<Boolean> markerList = new Vector<Boolean>();
 		int total =0;
 		BufferedReader bf = new BufferedReader(new StringReader(message));
-		BufferedReader bfm = new BufferedReader(new StringReader(marker));
+		//BufferedReader bfm = new BufferedReader(new StringReader(marker));
 		String line = null;
 		try {
 			while((line = bf.readLine())!=null)
 			{
 				//System.out.println("here"+line);
-				String mark = bfm.readLine();
-				if(line.contains("---") || line.contains("done"))
+				//String mark = bfm.readLine();
+				if(line.contains("---") || line.contains("done"))// || line.contains("!!") || line.contains("[")
+						//|| line.contains("]"))
 					continue;
 				/*else if(line.contains("cost"))
 				{
@@ -333,9 +334,9 @@ public class board {
 				{
 					//listData.addElement(langGenerator.ParserForLangGen.parseActCom(line));
 					listData.addElement(line);
-					markerList.addElement(Boolean.parseBoolean(mark));
-					if(Boolean.parseBoolean(mark))
-						total++;
+					//markerList.addElement(Boolean.parseBoolean(mark));
+					//if(Boolean.parseBoolean(mark))
+						//total++;
 				}
 			}
 		} catch (IOException e) {
@@ -355,13 +356,13 @@ public class board {
 		}
 		
 		DrawGUI.list.setListData(listData);
-		DrawGUI.list.setSelectionBackground(Color.CYAN.darker());
+		//DrawGUI.list.setSelectionBackground(Color.CYAN.darker());
 		/*for(int i=0;i<listData.size();i++)
 		{
 			if(markerList.get(i).booleanValue()==true)
 				DrawGUI.list.setSelectedIndex(i);
 		}*/
-		DrawGUI.list.setSelectedIndices(idx);
+		//DrawGUI.list.setSelectedIndices(idx);
 		DrawGUI.list.repaint();
 	}
 	

@@ -1512,81 +1512,6 @@ class Method10 extends Method
 	}
 }
 
-class Precondition9 extends Precondition
-{
-	Precondition[] p;
-	Term[][] b;
-
-	public Precondition9(Term[] unifier)
-	{
-		p = new Precondition[4];
-		p[1] = new PreconditionAtomic(new Predicate(1, 2, new TermList(TermVariable.getVariable(0), TermList.NIL)), unifier);
-		p[2] = new PreconditionAtomic(new Predicate(0, 2, new TermList(TermVariable.getVariable(0), TermList.NIL)), unifier);
-		p[3] = new PreconditionAtomic(new Predicate(0, 2, new TermList(TermVariable.getVariable(1), TermList.NIL)), unifier);
-		b = new Term[4][];
-		b[0] = unifier;
-		b[0] = Term.merge( b, 1 );
-
-		setFirst(false);
-	}
-
-	public void bind(Term[] binding)
-	{
-		b[0] = binding;
-		b[0] = Term.merge( b, 1 );
-		p[1].bind(binding);
-		b[1] = null;
-		b[2] = null;
-		b[3] = null;
-	}
-
-	protected Term[] nextBindingHelper()
-	{
-		while (b[3] == null)
-		{
-			boolean b2changed = false;
-			while (b[2] == null)
-			{
-				boolean b1changed = false;
-				while (b[1] == null)
-				{
-					b[1] = p[1].nextBinding();
-					if (b[1] == null)
-						return null;
-					b1changed = true;
-				}
-				if ( b1changed ) {
-					p[2].reset();
-					p[2].bind(Term.merge(b, 2));
-				}
-				b[2] = p[2].nextBinding();
-				if (b[2] == null) b[1] = null;
-				b2changed = true;
-			}
-			if ( b2changed ) {
-				p[3].reset();
-				p[3].bind(Term.merge(b, 3));
-			}
-			b[3] = p[3].nextBinding();
-			if (b[3] == null) b[2] = null;
-		}
-
-		Term[] retVal = Term.merge(b, 4);
-		b[3] = null;
-		return retVal;
-	}
-
-	protected void resetHelper()
-	{
-		p[1].reset();
-		p[2].reset();
-		p[3].reset();
-		b[1] = null;
-		b[2] = null;
-		b[3] = null;
-	}
-}
-
 class Method11 extends Method
 {
 	public Method11()
@@ -1620,7 +1545,7 @@ class Method11 extends Method
 		switch (which)
 		{
 			case 0:
-				p = (new Precondition9(unifier)).setComparator(null);
+				p = (new PreconditionNil(2)).setComparator(null);
 			break;
 			default:
 				return null;
@@ -1641,12 +1566,12 @@ class Method11 extends Method
 	}
 }
 
-class Precondition10 extends Precondition
+class Precondition9 extends Precondition
 {
 	Precondition[] p;
 	Term[][] b;
 
-	public Precondition10(Term[] unifier)
+	public Precondition9(Term[] unifier)
 	{
 		p = new Precondition[3];
 		p[1] = new PreconditionAtomic(new Predicate(8, 2, new TermList(TermVariable.getVariable(0), TermList.NIL)), unifier);
@@ -1701,12 +1626,12 @@ class Precondition10 extends Precondition
 	}
 }
 
-class Precondition11 extends Precondition
+class Precondition10 extends Precondition
 {
 	Precondition[] p;
 	Term[][] b;
 
-	public Precondition11(Term[] unifier)
+	public Precondition10(Term[] unifier)
 	{
 		p = new Precondition[4];
 		p[1] = new PreconditionAtomic(new Predicate(0, 2, new TermList(TermVariable.getVariable(0), TermList.NIL)), unifier);
@@ -1843,10 +1768,10 @@ class Method12 extends Method
 				p = (new PreconditionAtomic(new Predicate(9, 2, new TermList(TermVariable.getVariable(0), new TermList(TermVariable.getVariable(1), TermList.NIL))), unifier)).setComparator(null);
 			break;
 			case 1:
-				p = (new Precondition10(unifier)).setComparator(null);
+				p = (new Precondition9(unifier)).setComparator(null);
 			break;
 			case 2:
-				p = (new Precondition11(unifier)).setComparator(null);
+				p = (new Precondition10(unifier)).setComparator(null);
 			break;
 			case 3:
 				p = (new PreconditionNil(2)).setComparator(null);
@@ -1908,12 +1833,12 @@ class Axiom0 extends Axiom
 	}
 }
 
-class Precondition12 extends Precondition
+class Precondition11 extends Precondition
 {
 	Precondition[] p;
 	Term[][] b;
 
-	public Precondition12(Term[] unifier)
+	public Precondition11(Term[] unifier)
 	{
 		p = new Precondition[4];
 		p[1] = new PreconditionAtomic(new Predicate(3, 4, new TermList(TermVariable.getVariable(0), new TermList(TermVariable.getVariable(1), TermList.NIL))), unifier);
@@ -1983,6 +1908,66 @@ class Precondition12 extends Precondition
 	}
 }
 
+class Precondition12 extends Precondition
+{
+	Precondition[] p;
+	Term[][] b;
+
+	public Precondition12(Term[] unifier)
+	{
+		p = new Precondition[3];
+		p[1] = new PreconditionAtomic(new Predicate(1, 4, new TermList(TermVariable.getVariable(0), TermList.NIL)), unifier);
+		p[2] = new PreconditionAtomic(new Predicate(4, 4, new TermList(new TermList(TermConstant.getConstant(3), new TermList(TermVariable.getVariable(0), new TermList(TermVariable.getVariable(2), TermList.NIL))), TermList.NIL)), unifier);
+		b = new Term[3][];
+		b[0] = unifier;
+		b[0] = Term.merge( b, 1 );
+
+		setFirst(false);
+	}
+
+	public void bind(Term[] binding)
+	{
+		b[0] = binding;
+		b[0] = Term.merge( b, 1 );
+		p[1].bind(binding);
+		b[1] = null;
+		b[2] = null;
+	}
+
+	protected Term[] nextBindingHelper()
+	{
+		while (b[2] == null)
+		{
+			boolean b1changed = false;
+			while (b[1] == null)
+			{
+				b[1] = p[1].nextBinding();
+				if (b[1] == null)
+					return null;
+				b1changed = true;
+			}
+			if ( b1changed ) {
+				p[2].reset();
+				p[2].bind(Term.merge(b, 2));
+			}
+			b[2] = p[2].nextBinding();
+			if (b[2] == null) b[1] = null;
+		}
+
+		Term[] retVal = Term.merge(b, 3);
+		b[2] = null;
+		return retVal;
+	}
+
+	protected void resetHelper()
+	{
+		p[1].reset();
+		p[2].reset();
+		b[1] = null;
+		b[2] = null;
+	}
+}
+
 class Precondition13 extends Precondition
 {
 	Precondition[] p;
@@ -1991,8 +1976,8 @@ class Precondition13 extends Precondition
 	public Precondition13(Term[] unifier)
 	{
 		p = new Precondition[3];
-		p[1] = new PreconditionAtomic(new Predicate(1, 4, new TermList(TermVariable.getVariable(0), TermList.NIL)), unifier);
-		p[2] = new PreconditionAtomic(new Predicate(4, 4, new TermList(new TermList(TermConstant.getConstant(3), new TermList(TermVariable.getVariable(0), new TermList(TermVariable.getVariable(2), TermList.NIL))), TermList.NIL)), unifier);
+		p[1] = new PreconditionAtomic(new Predicate(3, 4, new TermList(TermVariable.getVariable(0), new TermList(TermVariable.getVariable(1), TermList.NIL))), unifier);
+		p[2] = new PreconditionAtomic(new Predicate(4, 4, new TermList(new TermList(TermConstant.getConstant(1), new TermList(TermVariable.getVariable(0), TermList.NIL)), TermList.NIL)), unifier);
 		b = new Term[3][];
 		b[0] = unifier;
 		b[0] = Term.merge( b, 1 );
@@ -2052,7 +2037,7 @@ class Precondition14 extends Precondition
 	{
 		p = new Precondition[3];
 		p[1] = new PreconditionAtomic(new Predicate(3, 4, new TermList(TermVariable.getVariable(0), new TermList(TermVariable.getVariable(1), TermList.NIL))), unifier);
-		p[2] = new PreconditionAtomic(new Predicate(4, 4, new TermList(new TermList(TermConstant.getConstant(1), new TermList(TermVariable.getVariable(0), TermList.NIL)), TermList.NIL)), unifier);
+		p[2] = new PreconditionAtomic(new Predicate(4, 4, new TermList(new TermList(TermConstant.getConstant(0), new TermList(TermVariable.getVariable(1), TermList.NIL)), TermList.NIL)), unifier);
 		b = new Term[3][];
 		b[0] = unifier;
 		b[0] = Term.merge( b, 1 );
@@ -2109,66 +2094,6 @@ class Precondition15 extends Precondition
 	Term[][] b;
 
 	public Precondition15(Term[] unifier)
-	{
-		p = new Precondition[3];
-		p[1] = new PreconditionAtomic(new Predicate(3, 4, new TermList(TermVariable.getVariable(0), new TermList(TermVariable.getVariable(1), TermList.NIL))), unifier);
-		p[2] = new PreconditionAtomic(new Predicate(4, 4, new TermList(new TermList(TermConstant.getConstant(0), new TermList(TermVariable.getVariable(1), TermList.NIL)), TermList.NIL)), unifier);
-		b = new Term[3][];
-		b[0] = unifier;
-		b[0] = Term.merge( b, 1 );
-
-		setFirst(false);
-	}
-
-	public void bind(Term[] binding)
-	{
-		b[0] = binding;
-		b[0] = Term.merge( b, 1 );
-		p[1].bind(binding);
-		b[1] = null;
-		b[2] = null;
-	}
-
-	protected Term[] nextBindingHelper()
-	{
-		while (b[2] == null)
-		{
-			boolean b1changed = false;
-			while (b[1] == null)
-			{
-				b[1] = p[1].nextBinding();
-				if (b[1] == null)
-					return null;
-				b1changed = true;
-			}
-			if ( b1changed ) {
-				p[2].reset();
-				p[2].bind(Term.merge(b, 2));
-			}
-			b[2] = p[2].nextBinding();
-			if (b[2] == null) b[1] = null;
-		}
-
-		Term[] retVal = Term.merge(b, 3);
-		b[2] = null;
-		return retVal;
-	}
-
-	protected void resetHelper()
-	{
-		p[1].reset();
-		p[2].reset();
-		b[1] = null;
-		b[2] = null;
-	}
-}
-
-class Precondition16 extends Precondition
-{
-	Precondition[] p;
-	Term[][] b;
-
-	public Precondition16(Term[] unifier)
 	{
 		p = new Precondition[4];
 		p[1] = new PreconditionAtomic(new Predicate(3, 4, new TermList(TermVariable.getVariable(0), new TermList(TermVariable.getVariable(2), TermList.NIL))), unifier);
@@ -2238,12 +2163,12 @@ class Precondition16 extends Precondition
 	}
 }
 
-class Precondition17 extends Precondition
+class Precondition16 extends Precondition
 {
 	Precondition[] p;
 	Term[][] b;
 
-	public Precondition17(Term[] unifier)
+	public Precondition16(Term[] unifier)
 	{
 		p = new Precondition[3];
 		p[1] = new PreconditionAtomic(new Predicate(3, 4, new TermList(TermVariable.getVariable(0), new TermList(TermVariable.getVariable(3), TermList.NIL))), unifier);
@@ -2312,22 +2237,22 @@ class Axiom1 extends Axiom
 		switch (which)
 		{
 			case 0:
-				p = (new Precondition12(unifier)).setComparator(null);
+				p = (new Precondition11(unifier)).setComparator(null);
 			break;
 			case 1:
-				p = (new Precondition13(unifier)).setComparator(null);
+				p = (new Precondition12(unifier)).setComparator(null);
 			break;
 			case 2:
-				p = (new Precondition14(unifier)).setComparator(null);
+				p = (new Precondition13(unifier)).setComparator(null);
 			break;
 			case 3:
-				p = (new Precondition15(unifier)).setComparator(null);
+				p = (new Precondition14(unifier)).setComparator(null);
 			break;
 			case 4:
-				p = (new Precondition16(unifier)).setComparator(null);
+				p = (new Precondition15(unifier)).setComparator(null);
 			break;
 			case 5:
-				p = (new Precondition17(unifier)).setComparator(null);
+				p = (new Precondition16(unifier)).setComparator(null);
 			break;
 			default:
 				return null;
@@ -2353,9 +2278,9 @@ class Axiom1 extends Axiom
 	}
 }
 
-public class blocks extends Domain
+public class blocksOLD extends Domain
 {
-	public blocks()
+	public blocksOLD()
 	{
 		TermVariable.initialize(4);
 

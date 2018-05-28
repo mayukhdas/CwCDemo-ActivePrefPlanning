@@ -164,7 +164,7 @@
 
 	(:method (move-block1 ?x ?z)
              method-for-moving-x-from-table-to-z
-             nil
+             ((on-table ?x) (clear ?x) (clear ?z))
              ; Decomposition
              ((!pickup ?x) (!stack ?x ?z)
              (!!assert (dont-move ?x))
