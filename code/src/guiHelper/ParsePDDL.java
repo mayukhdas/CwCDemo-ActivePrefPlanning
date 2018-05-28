@@ -104,7 +104,7 @@ public class ParsePDDL {
         Collections.sort(blocksIdentifiers);
         List<List<Block>> listRepresentationBlocks = new ArrayList<>();
         int columnIndex = 0;
-        int maxRowIndex = 14;
+        int maxRowIndex = BlocksworldDrawing.getGridSize() - 1;
         List<GridCoordinate> blockLocations = new ArrayList<>();
         for (String s : blocksTable) {
             int rowIndex = 0;
@@ -138,6 +138,10 @@ public class ParsePDDL {
     public Map<String, List<GridCoordinate>> parseFile(String fileName) {
     	//this.FILE_LOCATION = fileLocation;
         this.FILE_NAME = fileName;
+        blockHashMap.clear();;
+        blockGoalHashMap.clear();;
+        blocksInitTable.clear();
+        blocksGoalTable.clear();
         return parseFile();
     }
 
@@ -193,6 +197,8 @@ public class ParsePDDL {
 
         ParsePDDL parsePDDL =  new ParsePDDL();
         parsePDDL.parseFile("examples/Blocks/problem20.txt");
+        parsePDDL.parseFile("examples/Blocks/problem25.txt");
+        //parsePDDL.parseFile("examples/Blocks/problem50.txt");
 
     }
 }

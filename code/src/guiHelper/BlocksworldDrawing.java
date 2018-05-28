@@ -15,7 +15,11 @@ public class BlocksworldDrawing extends JPanel {
     public static int NUMBER_BLOCKS = 1;
     public static int LOGO_BLOCKS = 2;
 
-    private static int GRID_SIZE = 15;
+    private static int GRID_SIZE = 17;
+    
+    public static int getGridSize() {
+    	return GRID_SIZE;
+    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -26,7 +30,7 @@ public class BlocksworldDrawing extends JPanel {
         }
         g.clearRect(0, 0, getWidth(), getHeight());
 
-        int dim = bi.getDimension()/2;
+        int dim = (int) (bi.getDimension()/2.5);
         System.out.println("dim " + dim);
         for (int x = 0; x < GRID_SIZE; x++) {
             for (int y = 0; y < GRID_SIZE; y++) {

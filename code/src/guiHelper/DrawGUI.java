@@ -486,7 +486,7 @@ public class DrawGUI {
         File folder = new File(PDDL_DIR);
         List<String> options = new ArrayList<>();
         List<String> problemsList = new ArrayList<>();
-        //problemsList.add(new String("problem20.txt"));
+        problemsList.add(new String("problem20.txt"));
         problemsList.add(new String("problem25.txt"));
         //problemsList.add(new String("problem50.txt"));
         for (File file: folder.listFiles()) {
