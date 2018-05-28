@@ -1,0 +1,12 @@
+Form a row of length 5. Then, build a column of length 4. Ensure that the top end of the column is next to the third column of the row. Do not put a block in the space at row 0 and column 3.
+row(a)^width(a,5)^column(b)^height(a,4)^block(c)^location(w1)^block-location(c,w1)^enum(b,c,0)^block(d)^location(w2)^block-location(d,w2)^enum(a,d,2)^spatial-rel(south,0,w2,w1)^restricted(3,0)
+!(3,0)
+(0,1)
+(1,1)
+(2,1)
+(3,1)
+(4,1)
+(2,2)
+(2,3)
+(2,4)
+(2,5)

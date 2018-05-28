@@ -39,6 +39,8 @@ public class Constants {
     public static final int MOVES_START_Y = 0;
     public static final int MOVES_WIDTH = 0;
     public static final int MOVES_HEIGHT = 0;
+    
+    
 
 
 

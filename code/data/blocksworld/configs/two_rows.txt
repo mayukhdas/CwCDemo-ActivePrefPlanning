@@ -1,0 +1,8 @@
+Create a row of length 3. Next, create another one to the bottom of the first one. Ensure that the the right end of the second one is aligned with the left end of the first one.
+row(a)^width(a,3)^row(b)^width(b,3)^bottom(b,a)^block(c)^location(w1)^block-location(c,w1)^enum(b,c,2)^block(d)^location(w2)^block-location(d,w2)^enum(a,d,0)^spatial-rel(south,0,w2,w1)
+(0,1)
+(1,1)
+(2,1)
+(2,0)
+(3,0)
+(4,0)

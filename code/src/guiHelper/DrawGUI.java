@@ -5,18 +5,16 @@ package guiHelper;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultCaret;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
+import java.io.File;
 
 //import static edu.oregonstate.eecs.mcplan.Main.*;
 
@@ -66,6 +64,19 @@ public class DrawGUI {
     public static final Boolean GUI_LOCK = true;
     public static final Boolean GUI_LOCK_SEND = true;
     
+    //CwC Demo Summer 2018 addition
+    public static String CONFIG_DIR = "data/blocksworld/configs/";
+    public static String PDDL_DIR = "examples/Blocks/";
+    public static BlockImages blockImages;
+    public static BlocksConfiguration blocksConfig;
+    private static JComboBox configComboBox;
+    public static BlocksworldDrawing goldDrawing;
+    public static BlocksworldDrawing testDrawing;
+    public static Map<String,Map<String, List<GridCoordinate>>> fileMap = new HashMap<>();
+    public static final int FRAME_SIZE_HEIGHT = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+    public static final int FRAME_SIZE_WIDTH = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    public static ParsePDDL parsePDDL = new ParsePDDL();
+    
 
     public static void main (String[] args) {
         try {
@@ -77,79 +88,103 @@ public class DrawGUI {
     public static void CreateGUI() throws InterruptedException {
         // solution found. Create GUI.
         frame = new JFrame();
-        frame.setResizable(false);
-        frame.setAlwaysOnTop(true);
+        /*frame.setResizable(false);
+        frame.setAlwaysOnTop(true);*/
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
 
             /** Once opened: load up the images. */
             public void windowOpened(WindowEvent e) {
-                System.out.println("Loading card images...");
-                //cardImages = CardImagesLoader.getDeck(e.getWindow());
+                System.out.println("Loading block images...");
+                blockImages = BlockImagesLoader.loadBlocks(e.getWindow());                
             }
 
         });
-
-        frame.setSize(Constants.FRAME_SIZE_WIDTH, Constants.FRAME_SIZE_HEIGHT);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setLayout(null);
+        //frame.setSize(Constants.FRAME_SIZE_WIDTH, Constants.FRAME_SIZE_HEIGHT);
         //JList 
         list = new JList(); //mod ---- Mayukh Das
-
 
         // add widgets at proper location
         frame.setLayout(null);
 
         // top row:
         //adding Game Number
-        JPanel topLeft = new JPanel();
+        /*JPanel topLeft = new JPanel();
         topLeft.setBounds(0, 0, 195, 40);
         topLeft.add(new JLabel("Select Game:"));
         jtf = new JTextField (Constants.FRAME_TEXT_FILED_SIZE);
         topLeft.add(jtf);
-        frame.add(topLeft);
+        frame.add(topLeft);*/
 
         //adding Simulation Count
-        JPanel topLeftMiddle = new JPanel();
+        /*JPanel topLeftMiddle = new JPanel();
         topLeftMiddle.setBounds(200, 0, 195, 40);
         topLeftMiddle.add(new JLabel("Simulation Count:"));
         jtfLeftMiddle = new JTextField (4);
         topLeftMiddle.add(jtfLeftMiddle);
-        frame.add(topLeftMiddle);
+        frame.add(topLeftMiddle);*/
 
         //adding UCT Constant
-        JPanel topRightMiddle = new JPanel();
+        /*JPanel topRightMiddle = new JPanel();
         topRightMiddle.setBounds(400, 0, 150, 40);
         topRightMiddle.add(new JLabel("UCT-C:"));
         jtfRightMiddle = new JTextField (4);
         topRightMiddle.add(jtfRightMiddle);
-        frame.add(topRightMiddle);
+        frame.add(topRightMiddle);*/
 
         //adding Sample Size
-        JPanel topRightSample = new JPanel();
+        /*JPanel topRightSample = new JPanel();
         topRightSample.setBounds(555, 0, 165, 40);
         topRightSample.add(new JLabel("Sample Count:"));
         jtfRightSample = new JTextField (4);
         topRightSample.add(jtfRightSample);
-        frame.add(topRightSample);
+        frame.add(topRightSample);*/
 
-        JPanel topStart = new JPanel();
+        /*JPanel topStart = new JPanel();
         topStart.setBounds(730, 0, 65, 40);
         JButton startButton = new JButton();
         startButton.setText("Start");
         startButton.addActionListener(new startButtonListener());
         topStart.add(startButton);
-        frame.add(topStart);
+        frame.add(topStart);*/
+        
+        // TOP ROW
+        // component selecting block configuration
+        JPanel configPanel = new JPanel();
+        configPanel.setBounds(0, 0, (FRAME_SIZE_WIDTH/3-410) + 450, 50);
+        configPanel.add(new JLabel("Select Configuration:"));
+        java.util.List<String> configOptions = findConfigOptions();
+        configComboBox = new JComboBox(configOptions.toArray(new String[configOptions.size()]));
+        configComboBox.setSelectedIndex(-1);
+        configComboBox.addActionListener(new ConfigSelectionListener());
+        configComboBox.setEnabled(false);
+        configPanel.add(configComboBox);
+        frame.add(configPanel);
 
         JPanel topRight = new JPanel();
-        topRight.setBounds(400, 40, 400, 40);
+        //topRight.setBounds(400, 40, 400, 40);
+        topRight.setBounds((2 * FRAME_SIZE_WIDTH /3), 10, 450, 35);
         String instructions = "Human and Planner Communication Panel";
         topRight.add(new JLabel(instructions));
         frame.add(topRight);
 
-        // bottom row
+        // init config plot it will be a 15 X 15 Grid
         //FreeCellDrawing drawer = new FreeCellDrawing();
-        drawer.setBounds (0, 40, 400, 275);
-        drawer.setBackground(new java.awt.Color(0, 128, 0));
-        frame.add(drawer);
+        testDrawing = new BlocksworldDrawing();
+        System.out.println(FRAME_SIZE_HEIGHT + " " + FRAME_SIZE_WIDTH);
+        testDrawing.setBounds((FRAME_SIZE_WIDTH/3-410), 50, 330, 330);
+        frame.add(testDrawing);
+        testDrawing.setBackground(new java.awt.Color(0, 128, 0));
+        frame.add(testDrawing);
+        
+        goldDrawing = new BlocksworldDrawing();
+        System.out.println(FRAME_SIZE_HEIGHT + " " + FRAME_SIZE_WIDTH);
+        goldDrawing.setBounds((FRAME_SIZE_WIDTH/3-410), 410, 330, 330);
+        frame.add(goldDrawing);
+        goldDrawing.setBackground(new java.awt.Color(0, 128, 0));
+        frame.add(goldDrawing);
 
         //add chatting box with Planner
 
@@ -174,7 +209,8 @@ public class DrawGUI {
         chatboxScrollingPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         chatboxScrollingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         //chatboxScrollingPane.setBounds(10, 325, 385, 210);
-        chatboxScrollingPane.setBounds(405, 80, 395, 465);
+        //chatboxScrollingPane.setBounds(405, 80, 395, 465);
+        chatboxScrollingPane.setBounds((2 * FRAME_SIZE_WIDTH /3), 50, 420, 550);
         chatboxScrollingPane.getVerticalScrollBar().setValue(chatboxScrollingPane.getVerticalScrollBar().getMaximum());
         frame.add(chatboxScrollingPane);
 
@@ -195,7 +231,6 @@ public class DrawGUI {
         right.weightx = 1.0D;
         right.weighty = 1.0D;
 
-
         messageBox = new JTextField(20);
         messageBox.requestFocusInWindow();
 
@@ -204,7 +239,8 @@ public class DrawGUI {
         chatTextPanel.add(messageBox, left);
         chatTextPanel.add(sendMessage, right);
         //chatTextPanel.setBounds(10, 550, 385, 35);
-        chatTextPanel.setBounds(405, 550, 395, 35);
+        
+        chatTextPanel.setBounds((2 * FRAME_SIZE_WIDTH /3), 600, 420, 150);
 
         frame.add(chatTextPanel);
 
@@ -215,19 +251,32 @@ public class DrawGUI {
         //scrollingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         JScrollBar vertical = scrollingPane.getVerticalScrollBar();
         vertical.setValue(vertical.getMaximum() );
-
-        //scrollingPane.setBounds(405, 80, 395, 535);
-        scrollingPane.setBounds(10, 325, 385, 255);
+        scrollingPane.setBounds((FRAME_SIZE_WIDTH /3) + 50, 50, 370, 650);
         frame.add(scrollingPane);
+        
+        JPanel topMiddle = new JPanel();        
+        topMiddle.setBounds((FRAME_SIZE_WIDTH /3) + 50, 10, 370, 35);
+        String topMiddleTitle = "Plan From the Planner";
+        topMiddle.add(new JLabel(topMiddleTitle));
+        frame.add(topMiddle);
+        
         //display(frame);
         // set up listeners and show everything
         frame.setVisible(true);
-        synchronized (GUI_LOCK) {
+        /*synchronized (GUI_LOCK) {
             while (GAME_STARTED == false) {
                 GUI_LOCK.wait();
             }
-        }
-        System.out.println("staretd in GUI Thread");
+        }*/
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //parser = new BlocksSemanticParser();                               
+                configComboBox.setEnabled(true);
+            }
+        }).start();
+        
+        System.out.println("started in GUI Thread");
         
 
     }
@@ -432,6 +481,51 @@ public class DrawGUI {
                 System.out.println("started already...");
             }
         }
+    }
+    private static java.util.List<String> findConfigOptions() {
+        File folder = new File(PDDL_DIR);
+        List<String> options = new ArrayList<>();
+        List<String> problemsList = new ArrayList<>();
+        problemsList.add(new String("problem20.txt"));
+        //problemsList.add(new String("problem25.txt"));
+        //problemsList.add(new String("problem50.txt"));
+        for (File file: folder.listFiles()) {
+        	if(problemsList.contains(file.getName())){
+	        	if(file.getName().contains("problem") && file.getName().contains(".txt")){
+	        		int pos = file.getName().lastIndexOf(".");
+	        		String fName = file.getName().substring(0, pos);            
+	            	options.add(fName);
+	            	Map<String, List<GridCoordinate>> configMap = parsePDDL.parseFile(file.getAbsolutePath());
+	            	fileMap.put(fName, configMap);
+	            	System.out.println(fName + " " +  configMap);
+	            }
+        	}
+        }
+        return options;
+    }
+    private static class ConfigSelectionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            reset();
+            JComboBox cb = (JComboBox)e.getSource();
+            String fileName = (String)cb.getSelectedItem();
+            //blocksConfig = BlocksConfiguration.loadFromFile(fileMap.get(fileName));
+            blocksConfig = new BlocksConfiguration(fileMap.get(fileName).get("init"));            
+            testDrawing.setBlocksConfiguration(blocksConfig);
+            blocksConfig = new BlocksConfiguration(fileMap.get(fileName).get("goal"));
+            goldDrawing.setBlocksConfiguration(blocksConfig);
+            /*if (parseModeButton.isSelected()) {
+                systemInputField.setText(blocksConfig.getSampleDescription());                
+            } else {
+                systemInputField.setText(blocksConfig.getSampleLogicForm());
+            }*/
+        }
+    }
+    private static void reset() {
+        /*systemOutputPane.setText("");
+        systemInputField.setText("");
+        testDrawing.setBlocksConfiguration(new BlocksConfiguration());*/
+
     }
 
     public static int getSimulationCount() {
