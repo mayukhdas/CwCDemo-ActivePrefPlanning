@@ -32,11 +32,11 @@ public class BlocksworldDrawing extends JPanel {
 
         int dim = (int) (bi.getDimension()/2.5);
         System.out.println("dim " + dim);
-        for (int x = 0; x < GRID_SIZE; x++) {
+        /*for (int x = 0; x < GRID_SIZE; x++) {
             for (int y = 0; y < GRID_SIZE; y++) {
                 g.drawImage(bi.getGridTileImage(), dim*x, dim*y,  dim, dim, this);
             }
-        }
+        }*/
         if (config != null) {
             for (GridCoordinate coord : config.getBlockLocations()) {
                 System.out.println(coord.getX() + " " + coord.getY() + " " + coord.getID());
