@@ -29,33 +29,7 @@ public class gui{
 			e1.printStackTrace();
 		} 
 		
-			//new JSHOP2GUI();
-			frame = new JFrame();
-			frame.setAlwaysOnTop(true);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.addWindowListener(new WindowAdapter() {
-
-				/** Once opened: load up the images. */
-				public void windowOpened(WindowEvent e) {
-					//System.out.println("Loading card images...");
-					//cardImages = CardImagesLoader.getDeck(e.getWindow());
-				}
-				
-			});
-			
-			frame.setSize(808,350);
-			JList list = new JList();
-			
-			
-		    // add widgets at proper location
-		    frame.setLayout(null);
-		    
-		    // top row:
-		    
-		    // bottom row
-		    //frame.add(drawer);
-		    frame.setVisible(true);
-		
+	
 		LinkedList<Plan> Plist = problemMod.getPlans();
 		System.out.println(Plist.size());
 		//new JSHOP2GUI();

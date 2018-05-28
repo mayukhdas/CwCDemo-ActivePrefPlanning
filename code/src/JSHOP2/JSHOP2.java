@@ -2,14 +2,22 @@ package JSHOP2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.Vector;
 
 import AdviceHandler.AdviceKB;
 import AdviceHandler.Clause;
+import net.sf.tweety.logics.commons.syntax.Constant;
+import net.sf.tweety.logics.fol.FolBeliefSet;
+import net.sf.tweety.logics.fol.prover.FolTheoremProver;
+import net.sf.tweety.logics.fol.prover.NaiveProver;
+import net.sf.tweety.logics.fol.syntax.FOLAtom;
+import net.sf.tweety.logics.fol.syntax.FolFormula;
 import trucks.TrucksGoalCompare;
 
 /** This class represents all the variables that JSHOP2 needs every time it
@@ -427,7 +435,7 @@ public class JSHOP2
 		        	  }
 		        	  
 		        	  
-		        	  //System.out.println(state.getState());
+		        	  System.out.println(state.getState());
 		    		  System.out.println(MethodDist + " ===== " + entropy+"======Ask here!====="+MethodDist.size());
 		    		  System.out.println("Task: "+ v.t.toString());
 		    		  System.out.println("Options----");
@@ -878,7 +886,34 @@ public class JSHOP2
 	  String head = in.split("=>")[1];
 	  String body = in.split("=>")[0];
 	  String[] Terms = body.split(",");
+	  FolTheoremProver.setDefaultProver(new NaiveProver());
+	  Set<FolFormula> fset= new HashSet<FolFormula>();
+	  for(String x:state.getState())
+	  {
+		  String[] xArr = x.split(" ");
+		  String predicate;
+		  ArrayList<String> terms= new ArrayList<String>();
+		  if(xArr[0].contains("goal"))
+		  {
+			  predicate = xArr[1].replaceAll("\\)", "").replaceAll("\\(", "");
+			  for(int i=2;i<xArr.length;i++)
+				  terms.add(xArr[i].replaceAll("\\)", "").replaceAll("\\(", ""));
+		  }
+		  else if(xArr[0].contains("on") || xArr[0].contains("clear"))
+		  {
+			  predicate = xArr[0].replaceAll("\\)", "").replaceAll("\\(", "");
+			  for(int i=1;i<xArr.length;i++)
+				  terms.add(xArr[i].replaceAll("\\)", "").replaceAll("\\(", ""));
+		  }
+		  ArrayList<Constant> args = new ArrayList<Constant>();
+		  for(int i=0; i<terms.size();i++)
+		  {
+			  args.add(i, new Constant(terms.get(i));
+		  }
+		  FOLAtom fa = new FOLAtom(predicate,args);
+	  }
 	  
+	  FolBeliefSet st = new FolBeliefSet();
 	  return 0;
   }
 }
