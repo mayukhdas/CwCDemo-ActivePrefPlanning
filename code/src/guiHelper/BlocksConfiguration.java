@@ -86,7 +86,7 @@ public class BlocksConfiguration {
         return new BlocksConfiguration(coordinates, new ArrayList<GridCoordinate>(), null, null);
     }
 
-    public static BlocksConfiguration fromGeneratorRepresentation(List<String> plans, GeneratedSequence seq) {
+    /*public static BlocksConfiguration fromGeneratorRepresentation(List<String> plans, GeneratedSequence seq) {
         List<GridCoordinate> coordinates = new ArrayList<>();
         for (int i = 0; i < plans.size(); i++) {
             String[] entries = plans.get(i).substring(1, plans.get(i).length()-1).split(" ");
@@ -95,7 +95,7 @@ public class BlocksConfiguration {
             coordinates.add(new GridCoordinate(x,y,seq.blockIDs.get(i)));
         }
         return new BlocksConfiguration(coordinates, new ArrayList<>(), null, null);
-    }
+    }*/
 
     public List<GridCoordinate> getBlockLocations() {
         return blockLocations;

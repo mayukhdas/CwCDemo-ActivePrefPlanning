@@ -92,6 +92,10 @@ public class ParsePDDL {
                 blockHashMap.put(blockBelowId, b);
             }
         }
+        else{
+        	System.out.println("ignoring " + line);
+        }
+        
     }
 
     public List<GridCoordinate> blocksmapToList(HashMap<String, Block> blockHashMap, List<String> blocksTable){
