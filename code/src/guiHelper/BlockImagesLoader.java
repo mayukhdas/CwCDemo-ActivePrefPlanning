@@ -90,7 +90,7 @@ public class BlockImagesLoader implements Runnable {
             bi.setNumberImages(numberImages);
             List<Image> logoImages = new ArrayList<>();
             bi.setLogoImages(logoImages);
-            for (int i = 1; i <= 25; i++) {
+            for (int i = 1; i <= 50; i++) {
                 f = new File(NUMBERS_DIR + i + ".png");
                 url = f.toURI().toURL();
                 img = Toolkit.getDefaultToolkit().getImage(url);

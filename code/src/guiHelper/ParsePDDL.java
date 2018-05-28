@@ -196,9 +196,9 @@ public class ParsePDDL {
     public static void main(String[] args) {
 
         ParsePDDL parsePDDL =  new ParsePDDL();
-        parsePDDL.parseFile("examples/Blocks/problem20.txt");
-        parsePDDL.parseFile("examples/Blocks/problem25.txt");
-        //parsePDDL.parseFile("examples/Blocks/problem50.txt");
+        /*parsePDDL.parseFile("examples/Blocks/problem20.txt");
+        parsePDDL.parseFile("examples/Blocks/problem25.txt");*/
+        parsePDDL.parseFile("examples/Blocks/problem50.txt");
 
     }
 }

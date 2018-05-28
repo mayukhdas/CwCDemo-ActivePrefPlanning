@@ -488,7 +488,7 @@ public class DrawGUI {
         List<String> problemsList = new ArrayList<>();
         problemsList.add(new String("problem20.txt"));
         problemsList.add(new String("problem25.txt"));
-        //problemsList.add(new String("problem50.txt"));
+        problemsList.add(new String("problem50.txt"));
         for (File file: folder.listFiles()) {
         	if(problemsList.contains(file.getName())){
 	        	if(file.getName().contains("problem") && file.getName().contains(".txt")){
