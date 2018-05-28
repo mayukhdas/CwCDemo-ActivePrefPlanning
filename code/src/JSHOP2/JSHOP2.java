@@ -872,4 +872,13 @@ public class JSHOP2
   {
 	  
   }
+  
+  private static int parseAdvice(String in, Method[] ms)
+  {
+	  String head = in.split("=>")[1];
+	  String body = in.split("=>")[0];
+	  String[] Terms = body.split(",");
+	  
+	  return 0;
+  }
 }

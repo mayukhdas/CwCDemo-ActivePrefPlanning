@@ -180,6 +180,11 @@ public class GraphDB {
 		close();
 	}
 	
+	public boolean emptyDB()
+	{
+		m.getGraph().clear();
+		return true;
+	}
 	
 public GraphDB(ArrayList<String> data, String dbName, boolean overwrite) throws Exception {
 		
