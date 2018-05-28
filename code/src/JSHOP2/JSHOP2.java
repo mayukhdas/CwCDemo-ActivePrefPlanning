@@ -13,6 +13,7 @@ import java.util.Vector;
 
 import AdviceHandler.AdviceKB;
 import AdviceHandler.Clause;
+import def.gui;
 import net.sf.tweety.logics.commons.syntax.Constant;
 import net.sf.tweety.logics.fol.FolBeliefSet;
 import net.sf.tweety.logics.fol.prover.FolTheoremProver;
@@ -213,18 +214,26 @@ public class JSHOP2
     
     //Get hyper params
     System.out.print("Solicit Preferences(y/n)? : ");
-    Scanner in = new Scanner(System.in);
-    if(in.nextLine().equals("y"))
+   // Scanner in = new Scanner(System.in);
+    //if(in.nextLine().equals("y"))
+    String solicit="";
+    try {solicit = gui.brd.getAdvFromBoard("Solicit Preferences(y/n)? : ");}catch(Exception e) {e.printStackTrace();}
+    if(solicit.toLowerCase().contains("y"))
     {
     	pref=true;
     	System.out.print("Interact(y/n)? : ");
-    	in = new Scanner(System.in);
-    	if(in.nextLine().equals("y"))
+    	//in = new Scanner(System.in);
+    	String inct="";
+    	try {inct=gui.brd.getSomethingFromGUI("Interact(y/n)? : ");}catch(Exception e) {e.printStackTrace();}
+    	//if(in.nextLine().equals("y"))
+    	if(inct.toLowerCase().contains("y"))
     	{
     		interact = true;     
     		System.out.print("Do you want the computer to ask questions randomly(y/n)? : ");
-        	in = new Scanner(System.in);
-        	if(in.nextLine().equals("y"))
+    		String rand = "";
+    		try {rand = gui.brd.getSomethingFromGUI("Do you want the computer to ask questions randomly(y/n)? : ");}catch(Exception e) {e.printStackTrace();}
+        	//in = new Scanner(System.in);
+        	if(rand.toLowerCase().contains("y"))
         		random=true;
     	}
     }
@@ -373,7 +382,10 @@ public class JSHOP2
                 //-- tasks and we have found the maximum number of plans we are
                 //-- allowed, return true.
                 if (findPlanHelper(tasks) && plans.size() >= planNo)
+                {
+                	gui.brd.PrintPlan(currentPlan.toString(), null);
                   return true;
+                }
 
                 //-- Remove the operator from the current plan.
                 currentPlan.removeOperator(cost);
@@ -439,16 +451,31 @@ public class JSHOP2
 		        	  System.out.println(state.getState());
 		    		  System.out.println(MethodDist + " ===== " + entropy+"======Ask here!====="+MethodDist.size());
 		    		  System.out.println("Task: "+ v.t.toString());
+		    		  gui.brd.refresh(state);
+		    		  gui.brd.PrintPlan(currentPlan.toString(), null);
+		    		  gui.brd.PlannerCommentNoReturn("Task: "+ v.t.toString());
+		    		  
+		    		  String optionsString = "Options----\n";
 		    		  System.out.println("Options----");
 		    		  for(int x=0;x<v.m.length;x++)
 		    		  {
 		    			  if(MethodDist.keySet().contains(x))
+		    			  {
 		    			  System.out.println(x+" : "+ Arrays.deepToString(v.m[x].getSubs()));
+		    			  optionsString += x+" : "+ Arrays.deepToString(v.m[x].getSubs())+"\n";
+		    			  }
 		    			  
 		    		  }
 		    		  System.out.println("Choose:");
-		    		  Scanner sc = new Scanner(System.in);
-		    		  option = Integer.parseInt(sc.nextLine());
+		    		  optionsString +="Choose:\n";
+		    		  //Scanner sc = new Scanner(System.in);
+		    		  //option = Integer.parseInt(sc.nextLine());
+		    		  try {
+						option = Integer.parseInt(gui.brd.getAdvFromBoard(optionsString));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} 
 		    		  
 	    	  }
 		    	  

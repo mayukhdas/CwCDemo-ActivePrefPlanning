@@ -26,6 +26,8 @@ public class DrawGUI {
     public static JTextPane chatBox;//===md
     public static Style style;
     public static JButton sendMessage;
+    public static String fileNameChoice="";
+    public static boolean fileNameChosen=false;
     //public static CardImages cardImages;
 
     private static JTextField jtf;
@@ -208,6 +210,7 @@ public class DrawGUI {
         chatboxScrollingPane.setAutoscrolls(true);
         chatboxScrollingPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         chatboxScrollingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        
         //chatboxScrollingPane.setBounds(10, 325, 385, 210);
         //chatboxScrollingPane.setBounds(405, 80, 395, 465);
         chatboxScrollingPane.setBounds((2 * FRAME_SIZE_WIDTH /3), 50, 420, 550);
@@ -258,7 +261,7 @@ public class DrawGUI {
         topMiddle.setBounds((FRAME_SIZE_WIDTH /3) + 50, 10, 370, 35);
         String topMiddleTitle = "Plan From the Planner";
         topMiddle.add(new JLabel(topMiddleTitle));
-        topMiddle.add(list); //MD
+        //topMiddle.add(list); //MD
         frame.add(topMiddle);
         
         //display(frame);
@@ -510,6 +513,7 @@ public class DrawGUI {
             reset();
             JComboBox cb = (JComboBox)e.getSource();
             String fileName = (String)cb.getSelectedItem();
+            fileNameChoice = fileName;
             //blocksConfig = BlocksConfiguration.loadFromFile(fileMap.get(fileName));
             blocksConfig = new BlocksConfiguration(fileMap.get(fileName).get("init"));            
             testDrawing.setBlocksConfiguration(blocksConfig);
@@ -520,6 +524,8 @@ public class DrawGUI {
             } else {
                 systemInputField.setText(blocksConfig.getSampleLogicForm());
             }*/
+            synchronized(GUI_LOCK_SEND){
+            fileNameChosen=true;}
         }
     }
     private static void reset() {

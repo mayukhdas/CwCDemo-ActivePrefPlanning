@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.DefaultListModel;
@@ -24,11 +25,14 @@ import javax.swing.WindowConstants;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyleConstants;
 
+import guiHelper.BlocksConfiguration;
 import guiHelper.BlocksNode;
 //import edu.oregonstate.eecs.mcplan.Main;
 //import edu.oregonstate.eecs.mcplan.domains.freecell.Card;
 //import edu.oregonstate.eecs.mcplan.domains.freecell.Column;
 import guiHelper.DrawGUI;
+import guiHelper.ParsePDDL;
+import guiHelper.GridCoordinate;
 //import gui.model.Card;
 /*import freeCell.Column;
 import freeCell.FreeCellNode;
@@ -78,62 +82,9 @@ public class board {
 	}
 	public void refresh(State s)
 	{
-		init();
-		//System.out.println(s.getState());
-		for(String x : s.getState())
-		{
-			String clean = x.replaceAll("\\(", "").replaceAll("\\)", "").trim();
-			//System.out.println(clean);
-			String[] arr = clean.split(" ");
-			//System.out.println(arr[0]);
-			if(arr[0].contains("on") && !arr[0].contains("done"))
-			{
-				boolean inserted = false;
-				ArrayList<String> col=null;
-				if(this.tableau.size()==0 || arr[3].contains("NIL"))
-				{
-					col = new ArrayList<String>();
-					col.add(arr[1]+"-"+arr[2]);
-					this.tableau.add(col);
-				}
-				else
-				{
-					for(int c =0;c<this.tableau.size();c++)
-					{
-						if(this.tableau.get(c).contains(arr[3]+"-"+arr[4]))
-						{
-							this.tableau.get(c).add(arr[1]+"-"+arr[2]);
-						}
-					}
-				}
-				
-				
-				
-			}
-			else if(arr[0].contains("in-cell"))
-			{
-				this.freecells.add(arr[1]+"-"+arr[2]);
-			}
-			else if(arr[0].contains("done"))
-			{
-				int isThere = containsSub(arr[1]+"-",this.home);
-				if(isThere==-1)
-					this.home.add(arr[1]+"-"+arr[2]);
-				else
-				{
-					if(Double.parseDouble(arr[2])>Double.parseDouble(this.home.get(isThere).split("-")[1]))
-						this.home.add(arr[1]+"-"+arr[2]);
-				}
-			}
-			else if(arr[0].contains("empty-cells"))
-			{
-				Double p = Double.parseDouble(arr[1]);
-				for(int i=0;i<p.intValue();i++)
-					this.freecells.add("0-0");
-			}
-		}
-		if(isFin())
-			this.tableau=new ArrayList<ArrayList<String>>(); 
+		ParsePDDL p = new ParsePDDL();
+		DrawGUI.testDrawing.setBlocksConfiguration(new BlocksConfiguration(p.parseWorldState(s.getState()).get("init")));
+		DrawGUI.testDrawing.repaint();
 		
 	}
 
@@ -322,8 +273,8 @@ public class board {
 			{
 				//System.out.println("here"+line);
 				//String mark = bfm.readLine();
-				if(line.contains("---") || line.contains("done"))// || line.contains("!!") || line.contains("[")
-						//|| line.contains("]"))
+				if(line.contains("---") || line.contains("done") || line.contains("!!") || line.contains("[")
+						|| line.contains("]"))
 					continue;
 				/*else if(line.contains("cost"))
 				{

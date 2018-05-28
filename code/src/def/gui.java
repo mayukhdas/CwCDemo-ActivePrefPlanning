@@ -19,10 +19,23 @@ public class gui{
 	public static void main(String[] args) {
 		try {
 			DrawGUI.CreateGUI();
+			boolean go = false;
+			while(!go)
+			{
+				synchronized(DrawGUI.GUI_LOCK_SEND)
+				{
+					go = DrawGUI.fileNameChosen;
+					DrawGUI.GUI_LOCK_SEND.notify();
+				}
+			}
+
+			
 			brd = new board();
-			Scanner sc = new Scanner(System.in);
+			System.out.println("File Naam: "+DrawGUI.fileNameChoice);
+			//Scanner sc = new Scanner(System.in);
 	//		/int problemNumber = Integer.parseInt(sc.nextLine());
-			String problemFile = sc.nextLine();
+			//String problemFile = sc.nextLine();
+			String problemFile = DrawGUI.fileNameChoice+".txt";
 			if(problemFile.toLowerCase().equals("sense"))
 				problemFile = ReadFromSensor.getProblem();
 			String s = "./examples/Blocks/"+problemFile;
@@ -38,6 +51,7 @@ public class gui{
 	
 		LinkedList<Plan> Plist = problemMod.getPlans();
 		System.out.println(Plist.size());
+		gui.brd.refresh(JSHOP2.getState());
 		brd.PrintPlan(Plist.get(0).toString(), null);
 		System.out.println(JSHOP2.getState().getState());
 		//new JSHOP2GUI();
