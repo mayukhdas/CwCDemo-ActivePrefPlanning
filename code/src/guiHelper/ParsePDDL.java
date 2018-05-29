@@ -127,7 +127,7 @@ public class ParsePDDL {
                 currentList.add(b);
                 rowIndex ++;
             }
-            columnIndex +=2;
+            columnIndex +=1;
             //System.out.println("----clear----");
             listRepresentationBlocks.add(currentList);
             /*currentList.clear();*/

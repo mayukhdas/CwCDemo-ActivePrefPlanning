@@ -10,11 +10,14 @@ import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.*;
 import java.io.File;
+import javax.swing.text.DefaultCaret;
 
 //import static edu.oregonstate.eecs.mcplan.Main.*;
 
@@ -210,6 +213,11 @@ public class DrawGUI {
         chatboxScrollingPane.setAutoscrolls(true);
         chatboxScrollingPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         chatboxScrollingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        chatboxScrollingPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
+            public void adjustmentValueChanged(AdjustmentEvent e) {  
+                e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
+            }
+        });
         
         //chatboxScrollingPane.setBounds(10, 325, 385, 210);
         //chatboxScrollingPane.setBounds(405, 80, 395, 465);
@@ -251,10 +259,17 @@ public class DrawGUI {
         JScrollPane scrollingPane = new JScrollPane(list);
         scrollingPane.setAutoscrolls(true);
         scrollingPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        //scrollingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        JScrollBar vertical = scrollingPane.getVerticalScrollBar();
-        vertical.setValue(vertical.getMaximum() );
-        scrollingPane.setBounds((FRAME_SIZE_WIDTH /3) + 50, 50, 370, 650);
+        scrollingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        /*JScrollBar vertical = scrollingPane.getVerticalScrollBar();
+        vertical.setValue(vertical.getMaximum() );*/
+        
+        scrollingPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
+            public void adjustmentValueChanged(AdjustmentEvent e) {  
+                e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
+            }
+        });
+        
+        scrollingPane.setBounds((FRAME_SIZE_WIDTH /3) + 50, 50, 370, 650);        
         frame.add(scrollingPane);
         
         JPanel topMiddle = new JPanel();        
