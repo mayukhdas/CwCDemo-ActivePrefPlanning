@@ -263,11 +263,11 @@ public class DrawGUI {
         /*JScrollBar vertical = scrollingPane.getVerticalScrollBar();
         vertical.setValue(vertical.getMaximum() );*/
         
-        scrollingPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
+        /*scrollingPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
             public void adjustmentValueChanged(AdjustmentEvent e) {  
                 e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
             }
-        });
+        });*/
         
         scrollingPane.setBounds((FRAME_SIZE_WIDTH /3) + 50, 50, 370, 650);        
         frame.add(scrollingPane);
