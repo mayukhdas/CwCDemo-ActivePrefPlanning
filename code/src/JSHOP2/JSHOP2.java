@@ -13,6 +13,7 @@ import java.util.Vector;
 
 import AdviceHandler.AdviceKB;
 import AdviceHandler.Clause;
+import blocks.QueryTemplateBlocks;
 import def.gui;
 import net.sf.tweety.logics.commons.syntax.Constant;
 import net.sf.tweety.logics.fol.FolBeliefSet;
@@ -451,6 +452,7 @@ public class JSHOP2
 		        	  System.out.println(state.getState());
 		    		  System.out.println(MethodDist + " ===== " + entropy+"======Ask here!====="+MethodDist.size());
 		    		  System.out.println("Task: "+ v.t.toString());
+		    		  QueryTemplateBlocks.getTemplate(v.t, v.m);
 		    		  gui.brd.refresh(state);
 		    		  gui.brd.PrintPlan(currentPlan.toString(), null);
 		    		  gui.brd.PlannerCommentNoReturn("Task: "+ v.t.toString());
