@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Random;
 
-import AdviceHandler.QueryTemplateGeneral;
 import JSHOP2.Method;
+import JSHOP2.QueryTemplateGeneral;
 import JSHOP2.TaskAtom;
 
 public class QueryTemplateBlocks extends QueryTemplateGeneral {

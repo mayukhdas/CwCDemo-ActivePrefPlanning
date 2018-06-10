@@ -469,7 +469,7 @@ public class JSHOP2
 		    			  
 		    		  }
 		    		  System.out.println("Choose:");
-		    		  optionsString +="Choose:\n";
+		    		  optionsString +="Choose:";
 		    		  //Scanner sc = new Scanner(System.in);
 		    		  //option = Integer.parseInt(sc.nextLine());
 		    		  try {

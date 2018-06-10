@@ -51,6 +51,8 @@ public class gui{
 	
 		LinkedList<Plan> Plist = problemMod.getPlans();
 		System.out.println(Plist.size());
+		brd.PlannerCommentNoReturn("\n");
+		brd.PlannerCommentNoReturn("Plan Found\n");
 		gui.brd.refresh(JSHOP2.getState());
 		brd.PrintPlan(Plist.get(0).toString(), null);
 		System.out.println(JSHOP2.getState().getState());
