@@ -73,10 +73,17 @@ public class QueryTemplateBlocks extends QueryTemplateGeneral {
 					{
 						System.out.println(clean[0]+clean[1]);
 						if(clean[0].contains("assert") && clean[1].contains("dont-move"))
-							mString0 += " make sure block "+(clean[2].contains("VAR") ? "" : clean[2]) + "is never moved";
-						
+							mString0 += " make sure block "+(clean[2].contains("VAR") ? "" : clean[2]) + " is not movable anymore";
+						if(clean[0].contains("remove"))
+							mString0 += " assume sub-goal solved ";
 					}
-					
+					else
+					{
+						if(clean[0].contains("check"))
+						{
+							 
+						}
+					}
 					
 					if(j<methods[i].getSubs()[0].subtasks.length) mString0 += " -> ";	
 				}
