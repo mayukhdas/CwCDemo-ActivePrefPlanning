@@ -452,10 +452,12 @@ public class JSHOP2
 		        	  System.out.println(state.getState());
 		    		  System.out.println(MethodDist + " ===== " + entropy+"======Ask here!====="+MethodDist.size());
 		    		  System.out.println("Task: "+ v.t.toString());
-		    		  QueryTemplateBlocks.getTemplate(v.t, v.m);
+		    		  QueryTemplateGeneral template = QueryTemplateGeneral.getTemplate(v.t, v.m); //template
 		    		  gui.brd.refresh(state);
 		    		  gui.brd.PrintPlan(currentPlan.toString(), null);
-		    		  gui.brd.PlannerCommentNoReturn("Task: "+ v.t.toString());
+		    		  //gui.brd.PlannerCommentNoReturn("Task: "+ v.t.toString());
+		    		  
+		    		  gui.brd.PlannerCommentNoReturn(""+ template.gettask());
 		    		  
 		    		  String optionsString = "Options----\n";
 		    		  System.out.println("Options----");
@@ -468,6 +470,7 @@ public class JSHOP2
 		    			  }
 		    			  
 		    		  }
+		    		  optionsString = template.getMethods(); //template
 		    		  System.out.println("Choose:");
 		    		  optionsString +="Choose:";
 		    		  //Scanner sc = new Scanner(System.in);

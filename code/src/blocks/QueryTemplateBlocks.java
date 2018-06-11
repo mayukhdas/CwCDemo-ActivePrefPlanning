@@ -21,15 +21,16 @@ public class QueryTemplateBlocks extends QueryTemplateGeneral {
 	public static QueryTemplateBlocks getTemplate(TaskAtom task, Method[] methods)
 	{
 		String taskstring = "";
-		
+		ArrayList<String> mD = new ArrayList<String>();
 		if(task.getHead().isGround())
 		{
-			System.out.println("TERMS^^^^^^^^^^^^^^ "+task.getHead().getParam().toString());
-			String[] objs = task.getHead().toString().replaceAll("\\(", "").replaceAll("\\)", "").split(" ");
+			System.out.println("TERMS^^^^^^^^^^^^^^ "+task.toString());
+			String[] objs = task.toString().replaceAll("\\(", "").replaceAll("\\)", "").split(" ");
 			if(objs[0].contains("move"))
 			{
 				int pick = r.nextInt(3);
-				taskstring = "move block "+objs[1]+movement[pick]+objs[2];
+				taskstring = " move block "+objs[1]+movement[pick]+objs[2];
+				System.out.println(taskstring);
 			}
 			
 			for(int i=0;i<methods.length;i++)
@@ -48,13 +49,10 @@ public class QueryTemplateBlocks extends QueryTemplateGeneral {
 					
 				}
 				System.out.println("");
+				mD.add(methods[i].getSubs()[0].toString());
 			}
 		}
-		else if(task.getHead().isVar())
-		{
-			
-		}
-		return null;
+		return new QueryTemplateBlocks(taskstring,mD);
 	}
 	
 

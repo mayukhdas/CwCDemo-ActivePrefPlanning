@@ -8,7 +8,7 @@ import java.util.Set;
 
 import blocks.QueryTemplateBlocks;
 
-public abstract class QueryTemplateGeneral {
+public class QueryTemplateGeneral {
 	String task; 
 	ArrayList<String> methodDesc;
 	static String[] taskprefix = {"Trying to","I am trying to","Need a little help. Trying to ", "Attempting to"};
@@ -39,7 +39,7 @@ public abstract class QueryTemplateGeneral {
 	}
 	
 	
-	public static QueryTemplateBlocks getTemplate(TaskAtom task, Method[] methods)
+	public static QueryTemplateGeneral getTemplate(TaskAtom task, Method[] methods)
 	{
 		switch(JSHOP2.domain.getClass().getSimpleName())
 		{
