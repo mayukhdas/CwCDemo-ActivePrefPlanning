@@ -11,7 +11,7 @@ import JSHOP2.TaskAtom;
 public class QueryTemplateBlocks extends QueryTemplateGeneral {
 
 	private static Hashtable<String,String> varMapping = new Hashtable<String,String>();
-	public QueryTemplateBlocks(String task, ArrayList<String> Desc) {
+	public QueryTemplateBlocks(String task, ArrayList<String[]> Desc) {
 		super(task, Desc);
 		// TODO Auto-generated constructor stub
 	}
@@ -21,7 +21,7 @@ public class QueryTemplateBlocks extends QueryTemplateGeneral {
 	public static QueryTemplateBlocks getTemplate(TaskAtom task, Method[] methods)
 	{
 		String taskstring = "";
-		ArrayList<String> mD = new ArrayList<String>();
+		ArrayList<String[]> mD = new ArrayList<String[]>();
 		if(task.getHead().isGround())
 		{
 			System.out.println("TERMS^^^^^^^^^^^^^^ "+task.toString());
@@ -49,7 +49,8 @@ public class QueryTemplateBlocks extends QueryTemplateGeneral {
 					
 				}
 				System.out.println("");
-				mD.add(methods[i].getSubs()[0].toString());
+				String[] mString = {methods[i].getSubs()[0].toString(),""+i}; 
+				mD.add(mString);
 			}
 		}
 		return new QueryTemplateBlocks(taskstring,mD);

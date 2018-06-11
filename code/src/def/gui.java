@@ -54,7 +54,7 @@ public class gui{
 		brd.PlannerCommentNoReturn("\n");
 		brd.PlannerCommentNoReturn("Plan Found\n");
 		gui.brd.refresh(JSHOP2.getState());
-		brd.PrintPlan(Plist.get(0).toString(), null);
+		brd.PrintPlan(Plist.get(0).toString(), JSHOP2.markerToString());
 		System.out.println(JSHOP2.getState().getState());
 		//new JSHOP2GUI();
 	} 

@@ -10,10 +10,10 @@ import blocks.QueryTemplateBlocks;
 
 public class QueryTemplateGeneral {
 	String task; 
-	ArrayList<String> methodDesc;
+	ArrayList<String[]> methodDesc;
 	static String[] taskprefix = {"Trying to","I am trying to","Need a little help. Trying to ", "Attempting to"};
 	static Random rpref = new Random();
-	public QueryTemplateGeneral(String task, ArrayList<String> Desc)
+	public QueryTemplateGeneral(String task, ArrayList<String[]> Desc)
 	{
 		this.task = task;
 		this.methodDesc = Desc;
@@ -30,14 +30,17 @@ public class QueryTemplateGeneral {
 		Collections.shuffle(this.methodDesc);
 		String out="";
 		int counter = 1;
-		for(String m:this.methodDesc)
+		for(String[] m:this.methodDesc)
 		{
-			out += counter +": "+m+"\n";
+			out += counter +": "+m[0]+"\n";
 			counter++;
 		}
 		return out;
 	}
-	
+	public int getMethodOrigIdx(int id)
+	{
+		return Integer.parseInt(this.methodDesc.get(id-1)[1]);
+	}
 	
 	public static QueryTemplateGeneral getTemplate(TaskAtom task, Method[] methods)
 	{

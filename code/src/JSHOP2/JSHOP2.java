@@ -114,7 +114,9 @@ public class JSHOP2
 {
   /** The plan currently being constructed.
   */
+	final static String endl = System.getProperty("line.separator");
   private static Plan currentPlan;
+  private static LinkedList<Boolean> markers;
 
   /** The domain description for the planning problem.
   */
@@ -185,7 +187,7 @@ public class JSHOP2
 
     //-- Initialize the current plan to an empty one.
     currentPlan = new Plan();
-
+    markers = new LinkedList<Boolean>();
     //-- Initialize the current task list to be achieved.
     tasks = tasksIn;
 
@@ -264,6 +266,7 @@ public class JSHOP2
    *          <code>true</code> if a plan is found, <code>false</code>
    *          otherwise.
   */
+  static boolean marker = false;
   private static boolean findPlanHelper(TaskList chosenTask)
   {
     //-- The local variables we need every time this function is called.
@@ -369,6 +372,9 @@ public class JSHOP2
                 //-- to the beginning of the plan, remembering how much it
                 //-- cost.
                 double cost = currentPlan.addOperator(v.o[v.j], v.nextB);
+                
+                markers.add(marker);
+                marker = false;
 
                 //-- Create a STATECHANGED step for the list of plan steps
                 newStep = new PlanStepInfo();
@@ -384,7 +390,7 @@ public class JSHOP2
                 //-- allowed, return true.
                 if (findPlanHelper(tasks) && plans.size() >= planNo)
                 {
-                	gui.brd.PrintPlan(currentPlan.toString(), null);
+                	gui.brd.PrintPlan(currentPlan.toString(), markerToString());
                   return true;
                 }
 
@@ -454,7 +460,7 @@ public class JSHOP2
 		    		  System.out.println("Task: "+ v.t.toString());
 		    		  QueryTemplateGeneral template = QueryTemplateGeneral.getTemplate(v.t, v.m); //template
 		    		  gui.brd.refresh(state);
-		    		  gui.brd.PrintPlan(currentPlan.toString(), null);
+		    		  gui.brd.PrintPlan(currentPlan.toString(), markerToString());
 		    		  //gui.brd.PlannerCommentNoReturn("Task: "+ v.t.toString());
 		    		  
 		    		  gui.brd.PlannerCommentNoReturn(""+ template.gettask());
@@ -466,17 +472,19 @@ public class JSHOP2
 		    			  if(MethodDist.keySet().contains(x))
 		    			  {
 		    			  System.out.println(x+" : "+ Arrays.deepToString(v.m[x].getSubs()));
-		    			  optionsString += x+" : "+ Arrays.deepToString(v.m[x].getSubs())+"\n";
+		    			  //optionsString += x+" : "+ Arrays.deepToString(v.m[x].getSubs())+"\n";
 		    			  }
 		    			  
 		    		  }
-		    		  optionsString = template.getMethods(); //template
+		    		  optionsString += template.getMethods(); //template
 		    		  System.out.println("Choose:");
 		    		  optionsString +="Choose:";
 		    		  //Scanner sc = new Scanner(System.in);
 		    		  //option = Integer.parseInt(sc.nextLine());
 		    		  try {
-						option = Integer.parseInt(gui.brd.getAdvFromBoard(optionsString));
+		    			  String choicestring = gui.brd.getAdvFromBoard(optionsString);
+		    			  
+						option = template.getMethodOrigIdx(Integer.parseInt(choicestring));
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -488,6 +496,7 @@ public class JSHOP2
 		        if(!(option<0))
 		        {
 		        	userchoice.add(option);
+		        	marker = true;
 		        }
 		        for(int x=0;x<v.m.length;x++)
 		        {
@@ -582,7 +591,10 @@ public class JSHOP2
                 //-- this task was decomposed to an empty task list).
                 if (findPlanHelper(v.tl) && plans.size() >= planNo)
                   //-- A full plan is found, return true.
+                {
+                	//marker = false;
                   return true;
+                }
 
                 //-- The further branches of this method must NOT be considered
                 //-- even if this branch fails because there has been at least
@@ -968,5 +980,20 @@ public class JSHOP2
 	  
 	  FolBeliefSet st = new FolBeliefSet();
 	  return 0;
+  }
+  
+  public static String markerToString()
+  {
+	//-- The value to be returned.
+	    String retVal = ""+false + endl + endl;
+
+	    //-- Get the names of the operators in this domain.
+	    String[] primitiveTasks = JSHOP2.getDomain().getPrimitiveTasks();
+
+	    //-- Iterate over the operator instances in the plan and print them.
+	    for (Boolean p : markers)
+	      retVal += p.toString() + endl;
+
+	    return retVal + ""+false + endl;
   }
 }
