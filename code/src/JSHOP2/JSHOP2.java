@@ -11,6 +11,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.Vector;
 
+import org.apache.commons.lang3.StringUtils;
+
 import AdviceHandler.AdviceKB;
 import AdviceHandler.Clause;
 import blocks.QueryTemplateBlocks;
@@ -483,8 +485,10 @@ public class JSHOP2
 		    		  //option = Integer.parseInt(sc.nextLine());
 		    		  try {
 		    			  String choicestring = gui.brd.getAdvFromBoard(optionsString);
-		    			  
-						option = template.getMethodOrigIdx(Integer.parseInt(choicestring));
+		    			  if(StringUtils.isNumeric(choicestring))
+		    				  option = template.getMethodOrigIdx(Integer.parseInt(choicestring));
+		    			  else
+		    				  option = template.getMethodOrigIdxFromLabel(choicestring);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

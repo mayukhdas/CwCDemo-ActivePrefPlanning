@@ -145,7 +145,7 @@
     ;; the shared preconditions for several times. Here, the stack-on-block
     ;; is the shared precondition in the move-block method
     (:method (move-block1 ?x ?z)
-             method-for-moving-x-from-y-to-z
+             move-required-block-directly
              ((on ?x ?y) (clear ?w))
              ;Decomposition
              ((!unstack ?x ?y) (!stack ?x ?z)
@@ -154,7 +154,7 @@
              (check ?x) (check2 ?y) (check3 ?y)))
              
     (:method (move-block1 ?x ?z)
-             method-for-moving-x-from-y-to-z
+             move-required-block-via-temp-stack
              ((on ?x ?y) (clear ?w))
              ;Decomposition
              ((!unstack ?x ?y) (!stack ?x ?w) (!unstack ?x ?w) (!stack ?x ?z)
@@ -163,13 +163,13 @@
              (check ?x) (check2 ?y) (check3 ?y)))
 
 	(:method (move-block1 ?x ?z)
-             method-for-moving-x-from-table-to-z
+             move-requied-block-from-table-to-destination
              ((on-table ?x) (clear ?x) (clear ?z))
              ; Decomposition
              ((!pickup ?x) (!stack ?x ?z)
              (!!assert (dont-move ?x))
              (!!remove (stack-on-block ?x ?z))
-             (check ?x)))
+             ))
 
     ;; This is the main method. It first moves the blocks that are directly
     ;; movable to their final positions to their final position. Doing so

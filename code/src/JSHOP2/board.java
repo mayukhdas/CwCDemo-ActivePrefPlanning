@@ -219,8 +219,9 @@ public class board {
 		//DrawGUI.getChatBox().append("\n<Planner>: "+Message);
 		try {
 			StyleConstants.setForeground(DrawGUI.style, Color.BLACK);
-			DrawGUI.chatBox.getDocument().insertString(DrawGUI.chatBox.getStyledDocument().getLength(), "<Planner>  " + Message
+			DrawGUI.chatBox.getDocument().insertString(DrawGUI.chatBox.getStyledDocument().getLength(), "<Builder>  " + Message
 			+ "\n",DrawGUI.style);
+			DrawGUI.messageBox.requestFocus();
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -251,7 +252,7 @@ public class board {
 		//DrawGUI.getChatBox().append("\n<Planner>: "+Message);
 		try {
 			StyleConstants.setForeground(DrawGUI.style, Color.BLACK);
-			DrawGUI.chatBox.getDocument().insertString(DrawGUI.chatBox.getStyledDocument().getLength(), "<Planner>  " + Message
+			DrawGUI.chatBox.getDocument().insertString(DrawGUI.chatBox.getStyledDocument().getLength(), "<Builder>  " + Message
 			+ "\n", DrawGUI.style);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block

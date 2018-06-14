@@ -458,7 +458,7 @@ public class DrawGUI {
                 } else {
                 	try {
                 		StyleConstants.setForeground(style, Color.CYAN.darker());
-						chatBox.getDocument().insertString(chatBox.getStyledDocument().getLength(), "<Human>  " + messageBox.getText()+"\n"
+						chatBox.getDocument().insertString(chatBox.getStyledDocument().getLength(), "<Architect>  " + messageBox.getText()+"\n"
 						        , style);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block

@@ -11,8 +11,8 @@ import JSHOP2.TaskAtom;
 public class QueryTemplateBlocks extends QueryTemplateGeneral {
 
 	private static Hashtable<String,String> varMapping = new Hashtable<String,String>();
-	public QueryTemplateBlocks(String task, ArrayList<String[]> Desc) {
-		super(task, Desc);
+	public QueryTemplateBlocks(String task, ArrayList<String[]> Desc, Hashtable<String,Integer> labelmap) {
+		super(task, Desc, labelmap);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -20,6 +20,8 @@ public class QueryTemplateBlocks extends QueryTemplateGeneral {
 	static Random r = new Random();
 	public static QueryTemplateBlocks getTemplate(TaskAtom task, Method[] methods)
 	{
+
+		Hashtable<String,Integer> labelmap = new Hashtable<String,Integer>();
 		String taskstring = "";
 		ArrayList<String[]> mD = new ArrayList<String[]>();
 		if(task.getHead().isGround())
@@ -41,12 +43,14 @@ public class QueryTemplateBlocks extends QueryTemplateGeneral {
 				{
 					varMapping.put(vars[j], objs[j+1]);
 				}
+				labelmap.put(methods[i].getLabel(0), i);
 				
 				System.out.println("1st sub task^^^^^^^^^^^^^^ "+methods[i].getLabel(0));
 				String[] mString = {methods[i].getSubs()[0].toString(),""+i};
-				String mString0 = "";
+				String mString0 = methods[i].getLabel(0)+":  ";
 				for(int j=0;j<methods[i].getSubs()[0].subtasks.length;j++)
 				{
+					boolean somethingAdded=false;
 					System.out.print(j+"-"+methods[i].getSubs()[0].subtasks[j]+"; ");
 					String[] clean = methods[i].getSubs()[0].subtasks[j].toString().split(" ");
 					for(int k=0;k<clean.length;k++) 
@@ -59,41 +63,45 @@ public class QueryTemplateBlocks extends QueryTemplateGeneral {
 						if(clean[0].contains("unstack"))
 						{
 							mString0 += "take block "+clean[1]+" from "+(clean[2].contains("VAR")?"its current stack": "top of block "+clean[2]);
+							somethingAdded = true;
 						}
 						else if(clean[0].contains("stack") && !clean[0].contains("unstack"))
 						{
 							mString0 += "put it on "+(clean[2].contains("VAR")?"any stack": "top of block "+clean[2]);
+							somethingAdded=true;
 						}
 						else if(clean[0].contains("pickup"))
 						{
 							mString0 += "pick block "+(clean[1].contains("VAR") ? "" : clean[1]) + " up from the table";
+							somethingAdded=true;
 						}
 					}
 					else if(clean[0].startsWith("!!"))
 					{
 						System.out.println(clean[0]+clean[1]);
 						if(clean[0].contains("assert") && clean[1].contains("dont-move"))
-							mString0 += " make sure block "+(clean[2].contains("VAR") ? "" : clean[2]) + " is not movable anymore";
-						if(clean[0].contains("remove"))
-							mString0 += " assume sub-goal solved ";
-					}
-					else
-					{
-						if(clean[0].contains("check"))
 						{
-							 
+							mString0 += " make sure block "+(clean[2].contains("VAR") ? "" : clean[2]) + " is not movable anymore";
+							somethingAdded = true;
+						}
+						if(clean[0].contains("remove"))
+						{
+							mString0 += " assume sub-goal solved ";
+							somethingAdded=true;
 						}
 					}
 					
-					if(j<methods[i].getSubs()[0].subtasks.length) mString0 += " -> ";	
-				}
+					if(j<methods[i].getSubs()[0].subtasks.length-1 && somethingAdded) {
+						mString0 += " -> ";	
+					}
+				} 
 				System.out.println("");
 				mString[0] = mString0+"\n";
 				 
 				mD.add(mString);
 			}
 		}
-		return new QueryTemplateBlocks(taskstring,mD);
+		return new QueryTemplateBlocks(taskstring,mD,labelmap);
 	}
 	
 
