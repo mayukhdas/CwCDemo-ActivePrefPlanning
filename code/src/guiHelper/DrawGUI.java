@@ -31,6 +31,8 @@ public class DrawGUI {
     public static JButton sendMessage;
     public static String fileNameChoice="";
     public static boolean fileNameChosen=false;
+    public static JPanel topLeft;
+    public static JLabel topLeftLabel;
     //public static CardImages cardImages;
 
     private static JTextField jtf;
@@ -74,6 +76,7 @@ public class DrawGUI {
     public static String PDDL_DIR = "examples/Blocks/";
     public static BlockImages blockImages;
     public static BlocksConfiguration blocksConfig;
+    public static BlocksConfiguration finalGoalBlocksConfig;
     private static JComboBox configComboBox;
     public static BlocksworldDrawing goldDrawing;
     public static BlocksworldDrawing testDrawing;
@@ -158,7 +161,7 @@ public class DrawGUI {
         // TOP ROW
         // component selecting block configuration
         JPanel configPanel = new JPanel();
-        configPanel.setBounds(0, 0, (FRAME_SIZE_WIDTH/3-410) + 450, 50);
+        configPanel.setBounds(0, 0, (FRAME_SIZE_WIDTH/3-410) + 450, 40);
         configPanel.add(new JLabel("Select Configuration:"));
         java.util.List<String> configOptions = findConfigOptions();
         configComboBox = new JComboBox(configOptions.toArray(new String[configOptions.size()]));
@@ -170,19 +173,32 @@ public class DrawGUI {
 
         JPanel topRight = new JPanel();
         //topRight.setBounds(400, 40, 400, 40);
-        topRight.setBounds((2 * FRAME_SIZE_WIDTH /3), 10, 450, 35);
-        String instructions = "Human and Planner Communication Panel";
+        topRight.setBounds((2 * FRAME_SIZE_WIDTH /3) - 150, 10, 600, 35);
+        String instructions = "Architect-Builder Communication Panel";
         topRight.add(new JLabel(instructions));
         frame.add(topRight);
 
         // init config plot it will be a 15 X 15 Grid
         //FreeCellDrawing drawer = new FreeCellDrawing();
+        topLeft = new JPanel();
+        topLeft.setBounds((FRAME_SIZE_WIDTH/3-410), 40, 330, 20);
+        String topLeftString = "Initial Configuration";
+        topLeftLabel=new JLabel(topLeftString);
+        topLeft.add(topLeftLabel);
+        frame.add(topLeft);
+        
         testDrawing = new BlocksworldDrawing();
         System.out.println(FRAME_SIZE_HEIGHT + " " + FRAME_SIZE_WIDTH);
-        testDrawing.setBounds((FRAME_SIZE_WIDTH/3-410), 50, 330, 330);
+        testDrawing.setBounds((FRAME_SIZE_WIDTH/3-410), 65, 330, 325);
         frame.add(testDrawing);
         testDrawing.setBackground(new java.awt.Color(0, 128, 0));
         frame.add(testDrawing);
+        
+        JPanel targetLable = new JPanel();
+        targetLable.setBounds((FRAME_SIZE_WIDTH/3-410), 385, 330, 20);
+        String targetLableString = "Goal Configuration";
+        targetLable.add(new JLabel(targetLableString));
+        frame.add(targetLable);
         
         goldDrawing = new BlocksworldDrawing();
         System.out.println(FRAME_SIZE_HEIGHT + " " + FRAME_SIZE_WIDTH);
@@ -221,7 +237,7 @@ public class DrawGUI {
         
         //chatboxScrollingPane.setBounds(10, 325, 385, 210);
         //chatboxScrollingPane.setBounds(405, 80, 395, 465);
-        chatboxScrollingPane.setBounds((2 * FRAME_SIZE_WIDTH /3), 50, 420, 550);
+        chatboxScrollingPane.setBounds((2 * FRAME_SIZE_WIDTH /3) - 160, 50, 600, 550);
         chatboxScrollingPane.getVerticalScrollBar().setValue(chatboxScrollingPane.getVerticalScrollBar().getMaximum());
         frame.add(chatboxScrollingPane);
 
@@ -251,7 +267,7 @@ public class DrawGUI {
         chatTextPanel.add(sendMessage, right);
         //chatTextPanel.setBounds(10, 550, 385, 35);
         
-        chatTextPanel.setBounds((2 * FRAME_SIZE_WIDTH /3), 600, 420, 150);
+        chatTextPanel.setBounds((2 * FRAME_SIZE_WIDTH /3) - 160, 600, 600, 150);
 
         frame.add(chatTextPanel);
 
@@ -269,11 +285,11 @@ public class DrawGUI {
             }
         });*/
         
-        scrollingPane.setBounds((FRAME_SIZE_WIDTH /3) + 50, 50, 370, 650);        
+        scrollingPane.setBounds((FRAME_SIZE_WIDTH /3) - 20, 50, 250, 650);        
         frame.add(scrollingPane);
         
         JPanel topMiddle = new JPanel();        
-        topMiddle.setBounds((FRAME_SIZE_WIDTH /3) + 50, 10, 370, 35);
+        topMiddle.setBounds((FRAME_SIZE_WIDTH /3) - 20, 10, 250, 35);
         String topMiddleTitle = "Plan From the Planner";
         topMiddle.add(new JLabel(topMiddleTitle));
         //topMiddle.add(list); //MD
@@ -458,7 +474,7 @@ public class DrawGUI {
                 } else {
                 	try {
                 		StyleConstants.setForeground(style, Color.CYAN.darker());
-						chatBox.getDocument().insertString(chatBox.getStyledDocument().getLength(), "<Architect>  " + messageBox.getText()+"\n"
+						chatBox.getDocument().insertString(chatBox.getStyledDocument().getLength(), "<Architect>  " + messageBox.getText()+"\n\n\n"
 						        , style);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -534,6 +550,7 @@ public class DrawGUI {
             testDrawing.setBlocksConfiguration(blocksConfig);
             blocksConfig = new BlocksConfiguration(fileMap.get(fileName).get("goal"));
             goldDrawing.setBlocksConfiguration(blocksConfig);
+            finalGoalBlocksConfig = blocksConfig;
             /*if (parseModeButton.isSelected()) {
                 systemInputField.setText(blocksConfig.getSampleDescription());                
             } else {

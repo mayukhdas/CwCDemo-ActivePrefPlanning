@@ -53,7 +53,7 @@ public class QueryTemplateGeneral {
 			String[] strArray = str.split(" ");
 			for(String s:strArray)
 			{
-				if(lbl.contains(s))
+				if(lbl.toLowerCase().contains(s.toLowerCase()))
 					match++;
 			}
 			if(match>maxMatch)

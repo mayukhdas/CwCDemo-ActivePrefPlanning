@@ -222,8 +222,8 @@ public class JSHOP2
    // Scanner in = new Scanner(System.in);
     //if(in.nextLine().equals("y"))
     String solicit="";
-    try {solicit = gui.brd.getAdvFromBoard("Solicit Preferences(y/n)? : ");}catch(Exception e) {e.printStackTrace();}
-    if(solicit.toLowerCase().contains("y"))
+    //try {solicit = gui.brd.getAdvFromBoard("Solicit Preferences(y/n)? : ");}catch(Exception e) {e.printStackTrace();}
+    if(true)
     {
     	pref=true;
     	System.out.print("Interact(y/n)? : ");
@@ -236,10 +236,10 @@ public class JSHOP2
     		interact = true;     
     		System.out.print("Do you want the computer to ask questions randomly(y/n)? : ");
     		String rand = "";
-    		try {rand = gui.brd.getSomethingFromGUI("Do you want the computer to ask questions randomly(y/n)? : ");}catch(Exception e) {e.printStackTrace();}
+    		//try {rand = gui.brd.getSomethingFromGUI("Do you want the computer to ask questions randomly(y/n)? : ");}catch(Exception e) {e.printStackTrace();}
         	//in = new Scanner(System.in);
-        	if(rand.toLowerCase().contains("y"))
-        		random=true;
+        	//if(rand.toLowerCase().contains("y"))
+        		random=false;
     	}
     }
     //-- Call the helper function  - 
@@ -467,7 +467,7 @@ public class JSHOP2
 		    		  
 		    		  gui.brd.PlannerCommentNoReturn(""+ template.gettask());
 		    		  
-		    		  String optionsString = "Options----\n";
+		    		  String optionsString = "I have several options that seem equally good : \n\n";
 		    		  System.out.println("Options----");
 		    		  for(int x=0;x<v.m.length;x++)
 		    		  {
@@ -480,7 +480,7 @@ public class JSHOP2
 		    		  }
 		    		  optionsString += template.getMethods(); //template
 		    		  System.out.println("Choose:");
-		    		  optionsString +="Choose:";
+		    		  optionsString +="Which one do you think is best? Guide me: ";
 		    		  //Scanner sc = new Scanner(System.in);
 		    		  //option = Integer.parseInt(sc.nextLine());
 		    		  try {
@@ -540,7 +540,7 @@ public class JSHOP2
     	 
         //-- For each of these methods,
         //for (v.j = 0; v.j < v.m.length; v.j++)
-    	System.out.println(iter);
+    	//System.out.println("ITER@@@@ "+v.m[iter.get(0)].getLabel(0) + " , "+ (iter.size()>1?v.m[iter.get(1)].getLabel(0):""));
         for(int c:iter)
         {
         	v.j = c;

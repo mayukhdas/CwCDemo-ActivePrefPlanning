@@ -1387,7 +1387,7 @@ class Method9 extends Method
 	{
 		switch (which)
 		{
-			case 0: return "move-required-block-directly";
+			case 0: return "Move-directly";
 			default: return null;
 		}
 	}
@@ -1505,7 +1505,7 @@ class Method10 extends Method
 	{
 		switch (which)
 		{
-			case 0: return "move-required-block-via-temp-stack";
+			case 0: return "Via-secondary-stack";
 			default: return null;
 		}
 	}
@@ -1602,11 +1602,12 @@ class Method11 extends Method
 	{
 		TaskList retVal;
 
-		retVal = new TaskList(4, true);
+		retVal = new TaskList(5, true);
 		retVal.subtasks[0] = new TaskList(new TaskAtom(new Predicate(0, 2, new TermList(TermVariable.getVariable(0), TermList.NIL)), false, true));
 		retVal.subtasks[1] = new TaskList(new TaskAtom(new Predicate(2, 2, new TermList(TermVariable.getVariable(0), new TermList(TermVariable.getVariable(1), TermList.NIL))), false, true));
 		retVal.subtasks[2] = new TaskList(new TaskAtom(new Predicate(4, 2, new TermList(new TermList(TermConstant.getConstant(6), new TermList(TermVariable.getVariable(0), TermList.NIL)), TermList.NIL)), false, true));
 		retVal.subtasks[3] = new TaskList(new TaskAtom(new Predicate(5, 2, new TermList(new TermList(TermConstant.getConstant(9), new TermList(TermVariable.getVariable(0), new TermList(TermVariable.getVariable(1), TermList.NIL))), TermList.NIL)), false, true));
+		retVal.subtasks[4] = new TaskList(new TaskAtom(new Predicate(6, 2, new TermList(TermVariable.getVariable(0), TermList.NIL)), false, false));
 
 		return retVal;
 	}
@@ -1633,7 +1634,7 @@ class Method11 extends Method
 	{
 		switch (which)
 		{
-			case 0: return "move-requied-block-from-table-to-destination";
+			case 0: return "From-table-to-destination";
 			default: return null;
 		}
 	}

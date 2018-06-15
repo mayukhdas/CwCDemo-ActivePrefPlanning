@@ -51,9 +51,10 @@ public class gui{
 	
 		LinkedList<Plan> Plist = problemMod.getPlans();
 		System.out.println(Plist.size());
-		brd.PlannerCommentNoReturn("\n");
-		brd.PlannerCommentNoReturn("Plan Found\n");
+		//brd.PlannerCommentNoReturn("\n");
+		brd.PlannerCommentNoReturn("Plan Found!! Cost of plan = "+ (int)Plist.get(0).cost + " steps. \n");
 		gui.brd.refresh(JSHOP2.getState());
+		gui.brd.refreshFinal();
 		brd.PrintPlan(Plist.get(0).toString(), JSHOP2.markerToString());
 		System.out.println(JSHOP2.getState().getState());
 		//new JSHOP2GUI();

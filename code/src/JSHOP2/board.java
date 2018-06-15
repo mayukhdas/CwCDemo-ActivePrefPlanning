@@ -85,7 +85,13 @@ public class board {
 		ParsePDDL p = new ParsePDDL();
 		DrawGUI.testDrawing.setBlocksConfiguration(new BlocksConfiguration(p.parseWorldState(s.getState()).get("init")));
 		DrawGUI.testDrawing.repaint();
+		DrawGUI.topLeftLabel.setText("Current State");
+		DrawGUI.topLeftLabel.repaint();
 		
+	}
+	public void refreshFinal()
+	{
+		DrawGUI.testDrawing.setBlocksConfiguration(DrawGUI.finalGoalBlocksConfig);
 	}
 
 	public void pop(State s){
@@ -260,6 +266,7 @@ public class board {
 		}
 	}
 	
+	
 	public void PrintPlan(String message, String marker)
 	{
 		DrawGUI.list.removeAll();
@@ -279,13 +286,15 @@ public class board {
 					continue;
 				else if(line.contains("cost"))
 				{
-					listData.addElement(line);
+					String steps = line.split(":")[1].trim();
+					int num = (int) Double.parseDouble(steps);
+					listData.addElement("Plan cost: "+ num +" steps");
 					markerList.addElement(false);
 				}
 				else
 				{
 					//listData.addElement(langGenerator.ParserForLangGen.parseActCom(line));
-					listData.addElement(line);
+					listData.addElement(ProcessPlanGeneric.processStep(line));
 					markerList.addElement(Boolean.parseBoolean(mark));
 					if(Boolean.parseBoolean(mark))
 						total++;

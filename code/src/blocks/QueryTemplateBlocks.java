@@ -47,7 +47,7 @@ public class QueryTemplateBlocks extends QueryTemplateGeneral {
 				
 				System.out.println("1st sub task^^^^^^^^^^^^^^ "+methods[i].getLabel(0));
 				String[] mString = {methods[i].getSubs()[0].toString(),""+i};
-				String mString0 = methods[i].getLabel(0)+":  ";
+				String mString0 = methods[i].getLabel(0)+"  :::  ";
 				for(int j=0;j<methods[i].getSubs()[0].subtasks.length;j++)
 				{
 					boolean somethingAdded=false;
@@ -83,11 +83,6 @@ public class QueryTemplateBlocks extends QueryTemplateGeneral {
 						{
 							mString0 += " make sure block "+(clean[2].contains("VAR") ? "" : clean[2]) + " is not movable anymore";
 							somethingAdded = true;
-						}
-						if(clean[0].contains("remove"))
-						{
-							mString0 += " assume sub-goal solved ";
-							somethingAdded=true;
 						}
 					}
 					

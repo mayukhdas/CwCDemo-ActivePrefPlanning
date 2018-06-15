@@ -12,7 +12,7 @@ import java.util.LinkedList;
 public class Plan
 {
   /** The cost of the plan. */
-  double cost;
+  public double cost;
 
   /** The new line character in the platform JSHOP2 is running on.
   */
